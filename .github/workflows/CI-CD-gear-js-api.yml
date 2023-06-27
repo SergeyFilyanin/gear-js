@@ -19,6 +19,8 @@ jobs:
         working-directory: api
       - run: npm run build
         working-directory: api
+      - run: ls -ltr
+        working-directory: api
       - run: |
           echo @sergeyfilyanin:https://npm.pkg.github.com/ > api/build/.npmrc
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> api/build/.npmrc
