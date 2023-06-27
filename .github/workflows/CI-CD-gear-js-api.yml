@@ -22,9 +22,9 @@ jobs:
       - run: ls -ltr
         working-directory: api
       - run: |
-          echo @sergeyfilyanin:https://npm.pkg.github.com/ > api/build/.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> api/build/.npmrc
+          echo @sergeyfilyanin:https://npm.pkg.github.com/ > api/lib/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> api/lib/.npmrc
       - run: npm publish
-        working-directory: api/build
+        working-directory: api/lib
         env:
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
