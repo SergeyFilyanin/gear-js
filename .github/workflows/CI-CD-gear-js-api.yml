@@ -8,18 +8,37 @@ jobs:
 
 
     runs-on: ubuntu-20.04
-    permissions: write-all
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+
+      - name: Use node 18.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
-          registry-url: https://npm.pkg.github.com/
-      - run: yarn install
+          node-version: 18.x
+
+      - name: Check package version
+        uses: EndBug/version-check@v1
+        id: check
+        with:
+          file-name: api/package.json
+          file-url: https://unpkg.com/@gear-js/api@latest/package.json
+          static-checking: localIsNew
+
+      - name: Install dependencies
+        if: steps.check.outputs.changed == 'true'
         working-directory: api
-      - run: yarn build
+        run: yarn install
+
+      - name: Build @gear-js/api
+        if: steps.check.outputs.changed == 'true'
         working-directory: api
-      - run: npm publish
-        working-directory: api
+        run: yarn build
+
+      - name: Publish
+        if: steps.check.outputs.changed == 'true'
+        working-directory: api/lib
+        run: |
+          npm config set //npm.pkg.github.com/:_authToken=$token
+          npm publish
         env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.GITHUB_TOKEN}}
