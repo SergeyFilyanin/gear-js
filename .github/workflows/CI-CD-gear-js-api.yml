@@ -6,7 +6,9 @@ on:
 jobs:
   publish-to-latest-relase:
 
+
     runs-on: ubuntu-20.04
+    permissions: write-all
     steps:
       - uses: actions/checkout@v3
 
