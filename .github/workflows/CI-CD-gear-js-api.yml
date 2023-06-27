@@ -22,15 +22,12 @@ jobs:
       - run: ls -ltr
         working-directory: api
       - name: Set package registry
+        working-directory: api/lib
         run: npm config set registry https://npm.pkg.github.com
       - name: GitHub package registry authentication
-        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GPR_TOKEN }}
-        env:
-          GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      - run: |
-#          echo @sergeyfilyanin:https://npm.pkg.github.com/ > api/lib/.npmrc
-#          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> api/lib/.npmrc
-      - run: npm publish
         working-directory: api/lib
-        env:
-          GPR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
+      - run: |
+          echo @sergeyfilyanin:https://npm.pkg.github.com/ > .npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> .npmrc
+          npm publish
