@@ -24,34 +24,11 @@ jobs:
       - name: Build @gear-js/api
         working-directory: api
         run: yarn build
-        
-      - name: Go to dir
-        working-directory: api/lib
-        run: ls -ltr
-        
-      - name: Create Draft Release
-        id: create_release
-        uses: actions/create-release@v1
+      - run: |
+          echo @sergeyfilyanin:https://npm.pkg.github.com/ > build/.npmrc
+          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+      - run: npm publish
+        working-directory: ./build
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: latest
-          release_name: latest
-          draft: true
-          prerelease: false
-
-      - name: Publish
-        uses: actions/upload-release-asset@v1.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: api/lib
-          asset_name: my-artifact.zip
-          asset_content_type: application/zip
-
-      - uses: eregon/publish-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          release_id: ${{ steps.create_release.outputs.id }}
+          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
