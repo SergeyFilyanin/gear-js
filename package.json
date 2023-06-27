@@ -30,6 +30,9 @@
     "idea/*",
     "utils/gear-ui"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "lint-staged": {
     "api/**/*.{js,ts}": "cd api && yarn lint:fix",
     "idea/**/*.{js,ts,tsx}": "eslint --fix --ignore-pattern 'idea/frontend/**'"
