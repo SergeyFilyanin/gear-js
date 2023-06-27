@@ -25,6 +25,10 @@ jobs:
         working-directory: api
         run: yarn build
         
+      - name: Go to dir
+        working-directory: api/lib
+        run: ls -ltr
+        
       - name: Create Draft Release
         id: create_release
         uses: actions/create-release@v1
