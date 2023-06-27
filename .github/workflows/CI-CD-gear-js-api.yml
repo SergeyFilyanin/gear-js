@@ -15,7 +15,9 @@ jobs:
         with:
           node-version: 18
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
+      - run: yarn install
+        working-directory: api
+      - run: yarn build
         working-directory: api
       - run: npm publish
         working-directory: api
