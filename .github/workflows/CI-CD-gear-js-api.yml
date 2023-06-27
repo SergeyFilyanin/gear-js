@@ -29,8 +29,8 @@ jobs:
           npm set //npm.pkg.github.com/:_authToken ${{ secrets.GITHUB_TOKEN }}
           npm publish --access=public
           
-      - name: Publish
-        run: |
-          echo @sergeyfilyanin:https://npm.pkg.github.com/ > .npmrc
-          echo '//npm.pkg.github.com/:_authToken=${secrets.GITHUB_TOKEN}' >> .npmrc
-          npm publish --access=public
+#      - name: Publish
+#        run: |
+#          echo @sergeyfilyanin:https://npm.pkg.github.com/ > .npmrc
+#          echo '//npm.pkg.github.com/:_authToken=${secrets.GITHUB_TOKEN}' >> .npmrc
+#          npm publish --access=public
